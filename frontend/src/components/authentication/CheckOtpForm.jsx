@@ -1,0 +1,186 @@
+import React, { useRef, useState, useEffect } from "react";
+import SubmitButton from "../../ui/SubmitButton";
+import { useMutation } from "@tanstack/react-query";
+import { checkOtp } from "../../services/AuthServices";
+
+const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
+  const length = 6;
+  const [digits, setDigits] = useState(Array(length).fill("")); // کنترل‌شده
+  const [otp, setOtp] = useState(""); // رشتهٔ نهایی
+  const [time, setTime] = useState(90);
+  const inputRefs = useRef([]);
+
+  useEffect(() => {
+    const timer =
+      time > 0 &&
+      setInterval(() => {
+        setTime((t) => t - 1);
+      }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [time]);
+
+  useEffect(() => {
+    setOtp(digits.join(""));
+  }, [digits]);
+
+  const focusInput = (idx) => {
+    const el = inputRefs.current[idx];
+    if (el) el.focus();
+  };
+
+  // وقتی کاربر تایپ یا پیست می‌کنه
+  const handleChange = (e, index) => {
+    const raw = e.target.value;
+    const cleaned = raw.replace(/\D/g, ""); // فقط ارقام
+    if (cleaned === "") {
+      // خالی شدن هم مجازه
+      setDigits((prev) => {
+        const next = [...prev];
+        next[index] = "";
+        return next;
+      });
+      return;
+    }
+
+    // اگه چند رقم پیست شده یا سریع تایپ شده => پخش کن
+    setDigits((prev) => {
+      const next = [...prev];
+      let writeIdx = index;
+      for (let ch of cleaned) {
+        if (writeIdx >= length) break;
+        next[writeIdx] = ch;
+        writeIdx++;
+      }
+      // فوکوس به اولین خانه خالی بعد از نوشتن
+      setTimeout(() => {
+        const focusTo = writeIdx < length ? writeIdx : length - 1;
+        focusInput(focusTo);
+      }, 0);
+      return next;
+    });
+  };
+
+  const handleKeyDown = (e, index) => {
+    const key = e.key;
+
+    if (key === "Backspace") {
+      e.preventDefault(); // جلوگیری از رفتار پیش‌فرض که ممکنه باعث تداخل بشه
+      setDigits((prev) => {
+        const next = [...prev];
+        if (next[index]) {
+          // اگر خانه‌ی فعلی پره => همون رو پاک کن
+          next[index] = "";
+          // فوکوس روی همون خانه بمونه (یا بعد از رندر ممکنه لازم باشه دوباره فوکوس کنیم)
+          setTimeout(() => focusInput(index), 0);
+        } else if (index > 0) {
+          // اگر فعلی خالیه => به قبلی برو و اون رو پاک کن
+          next[index - 1] = "";
+          setTimeout(() => focusInput(index - 1), 0);
+        }
+        return next;
+      });
+      return;
+    }
+
+    // جلوگیری از وارد کردن کاراکتر غیر عددی با کیبورد فیزیکی
+    if (key.length === 1 && !/\d/.test(key)) {
+      e.preventDefault();
+      return;
+    }
+
+    if (key === "ArrowLeft" && index > 0) {
+      e.preventDefault();
+      focusInput(index - 1);
+    }
+    if (key === "ArrowRight" && index < length - 1) {
+      e.preventDefault();
+      focusInput(index + 1);
+    }
+  };
+  // هندلر پیست (مطمئن‌تر از تکیه به onChange برای پیست)
+  const handlePaste = (e, index) => {
+    e.preventDefault();
+    const paste = (e.clipboardData || window.clipboardData).getData("text");
+    const digitsOnly = paste.replace(/\D/g, "").split("");
+    if (digitsOnly.length === 0) return;
+
+    setDigits((prev) => {
+      const next = [...prev];
+      let writeIdx = index;
+      for (let d of digitsOnly) {
+        if (writeIdx >= length) break;
+        next[writeIdx] = d;
+        writeIdx++;
+      }
+      setTimeout(() => focusInput(Math.min(writeIdx, length - 1)), 0);
+      return next;
+    });
+  };
+  const { isPending, data, error, mutateAsync } = useMutation({
+    mutationFn: checkOtp,
+  });
+  const submitHandle = async (e) => {
+    e.preventDefault();
+    console.log("OTP submitted:", otp);
+    const formData = { otp, phoneNumber };
+    try {
+      const { user, message } = await mutateAsync(formData);
+      console.log(user);
+      if (user?.isActive) {
+        // navigate() owner or freelancer dashboard
+      } else {
+        // navigate() complete information
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <form className="space-y-4" onSubmit={submitHandle}>
+      <div className="flex flex-col gap-4">
+        <p className="text-secondary-800 text-sm">رمز ورود</p>
+        <div className="flex flex-row-reverse justify-between w-full">
+          {digits.map((d, i) => (
+            <input
+              key={i}
+              ref={(el) => (inputRefs.current[i] = el)}
+              value={d}
+              onChange={(e) => handleChange(e, i)}
+              onKeyDown={(e) => handleKeyDown(e, i)}
+              onPaste={(e) => handlePaste(e, i)}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              dir="ltr"
+              maxLength={1}
+              className="w-12 h-12 text-center rounded border border-secondary-400"
+              aria-label={`Digit ${i + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-end">
+        {time > 0 ? (
+          <p className="text-xs text-secondary-500 cursor-pointer">
+            {time} ثانیه تا ارسال مجدد کد
+          </p>
+        ) : (
+          <button
+            onClick={() => {
+              onResendOTP();
+              setTime(90);
+            }}
+            className="text-xs text-secondary-500 cursor-pointer"
+          >
+            ارسال دوباره کد
+          </button>
+        )}
+      </div>
+      <SubmitButton disabled={otp?.length < 6}>تایید</SubmitButton>
+    </form>
+  );
+};
+
+export default CheckOtpForm;
