@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-/* @import "tailwindcss/preflight";
-@tailwind utilities; */
-
 @font-face {
   font-family: "Vazir";
   font-style: normal;
@@ -109,4 +106,5 @@
 
 body {
   @apply font-vazir;
+  direction: rtl;
 }
