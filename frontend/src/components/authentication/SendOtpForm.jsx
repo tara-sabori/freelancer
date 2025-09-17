@@ -23,7 +23,7 @@ const SendOtpForm = ({ onSubmit, isPending, setPhoneNumber, phoneNumber }) => {
         <SubmitButton
           disabled={isPending || !phoneNumber || phoneNumber?.length !== 11}
         >
-          تایید
+          ارسال کد تایید
         </SubmitButton>
       </form>
     </div>

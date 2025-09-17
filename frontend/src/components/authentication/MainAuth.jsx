@@ -9,17 +9,41 @@ const MainAuth = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const step = searchParams.get("step");
   const [currentStep, setCurrentStep] = useState(step || "1");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const { isPending, mutateAsync } = useMutation({
+  const oldPhoneNumber = sessionStorage.getItem("phoneNumber");
+  const [phoneNumber, setPhoneNumber] = useState(oldPhoneNumber || "");
+  const {
+    isPending,
+    mutateAsync,
+    data: resOTP,
+  } = useMutation({
     mutationFn: getOtp,
   });
   const sendOTP = async () => {
     const formData = { phoneNumber };
+    const oldPhone = sessionStorage.getItem("phoneNumber");
+    const oldExpiry = Number(sessionStorage.getItem("time")) || 0;
+    const now = Date.now();
+
+    if (
+      phoneNumber === oldPhoneNumber &&
+      currentStep === "1" &&
+      oldExpiry > now
+    ) {
+      setCurrentStep("2");
+      return;
+    }
+    if (currentStep === "1" && phoneNumber !== oldPhone) {
+      sessionStorage.removeItem("time");
+      sessionStorage.removeItem("phoneNumber");
+    }
     console.log(formData);
     try {
       const data = await mutateAsync(formData);
+      const newExpiry = Date.now() + 90000;
+      sessionStorage.setItem("time", String(newExpiry));
+      sessionStorage.setItem("phoneNumber", phoneNumber);
       console.log(data);
-      if (step === "1") {
+      if (currentStep === "1") {
         setCurrentStep("2");
         setSearchParams(new URLSearchParams("?step=2"));
       }
