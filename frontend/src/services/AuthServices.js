@@ -7,3 +7,9 @@ export async function getOtp(formData) {
 export async function checkOtp(formData) {
   return api.post("/user/check-otp", formData).then(({ data }) => data?.data);
 }
+
+export async function completeProfile(formData) {
+  return api
+    .post("/user/complete-profile", formData)
+    .then(({ data }) => data?.data);
+}
