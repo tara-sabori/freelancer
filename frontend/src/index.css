@@ -4,7 +4,7 @@
   font-family: "Vazir";
   font-style: normal;
   font-weight: 400;
-  src: url("/fonts/Vazirmatn-Regular.woff2") format("woff2");
+  src: url("/assets/fonts/Vazirmatn-Regular.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -12,7 +12,7 @@
   font-family: "Vazir";
   font-style: normal;
   font-weight: 700;
-  src: url("/fonts/Vazirmatn-Bold.woff2") format("woff2");
+  src: url("/assets/fonts/Vazirmatn-Bold.woff2") format("woff2");
   font-display: swap;
 }
 
@@ -20,7 +20,7 @@
   font-family: "Vazir";
   font-style: normal;
   font-weight: 900;
-  src: url("/fonts//Vazirmatn-Black.woff2") format("woff2");
+  src: url("/assets/fonts//Vazirmatn-Black.woff2") format("woff2");
   font-display: swap;
 }
 
