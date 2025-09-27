@@ -1,6 +1,7 @@
+import { PiX } from "react-icons/pi";
 import useOutsideClick from "../utils/useOutsideClick";
 
-const Modal = ({ children, onClose }) => {
+const Modal = ({ title, children, onClose, className = "" }) => {
   const ref = useOutsideClick(onClose);
   return (
     <div
@@ -9,11 +10,19 @@ const Modal = ({ children, onClose }) => {
     >
       <div
         ref={ref}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        rounded-lg bg-secondary-0 p-4 shadow-lg transition-all duration-500 ease-out
-        w-[calc(100vw-2rem)] md:max-w-lg max-h-[calc(100vh-2rem)] overflow-y-auto"
+        className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        rounded-lg bg-secondary-0 shadow-lg transition-all duration-500 ease-out
+        w-[calc(100vw-2rem)] md:max-w-lg ${className}`}
       >
-        {children}
+        <div className="flex items-center justify-between w-full p-1.5 border-b border-secondary-300">
+          <span className="text-sm text-shadow-secondary-400 font-semibold">
+            {title}
+          </span>
+          <PiX className="cursor-pointer" onClick={onClose} />
+        </div>
+        <div className="p-4 py-2 overflow-y-auto max-h-[calc(90vh-2rem)]">
+          {children}
+        </div>
       </div>
     </div>
   );
