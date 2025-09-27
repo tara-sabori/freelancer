@@ -13,3 +13,7 @@ export async function completeProfile(formData) {
     .post("/user/complete-profile", formData)
     .then(({ data }) => data?.data);
 }
+
+export async function getUser() {
+  return api.get("/profile/user").then(({ data }) => data?.data);
+}
