@@ -1,4 +1,4 @@
-import MainProjectList from "../../components/owner/projects/MainProjectList";
+import MainProjectList from "../../components/owner/projects/list/MainProjectList";
 
 const OwnerProjectsPage = () => {
   return <MainProjectList />;

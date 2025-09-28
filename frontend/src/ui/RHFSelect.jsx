@@ -10,7 +10,10 @@ function RHFSelect({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-2 block text-sm text-secondary-700">
+      <label
+        htmlFor={name}
+        className="mb-2 block text-sm text-right text-secondary-700"
+      >
         {label} {required && <span className="text-error text-base">*</span>}
       </label>
       {isLoading ? (

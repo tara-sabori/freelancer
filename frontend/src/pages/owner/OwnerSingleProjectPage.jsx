@@ -1,5 +1,7 @@
+import MainProfileProject from "../../components/owner/projects/profile/MainProfileProject";
+
 const OwnerSingleProjectPage = () => {
-  return <div>OwnerSingleProjectPage</div>;
+  return <MainProfileProject />;
 };
 
 export default OwnerSingleProjectPage;
