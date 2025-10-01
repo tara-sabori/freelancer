@@ -1,0 +1,75 @@
+import { PiCircleNotchLight } from "react-icons/pi";
+import useFreelancerProposal from "../../../../hooks/useFreelancerProposal";
+import ProposalListItem from "./ProposalListItem";
+
+const ProposalsList = () => {
+  const { data, isLoadingList } = useFreelancerProposal();
+  const proposals = data?.proposals || [];
+  return (
+    <div className="space-y-4">
+      <h3 className="font-semibold text-secondary-700">لیست درخواست‌های شما</h3>
+      <div className="w-full overflow-x-auto">
+        <table className="min-w-[600px] w-[90%] overflow-x-auto mx-">
+          <thead>
+            <tr>
+              <th className="bg-secondary-100 text-sm font-normal py-1.5 rounded-tr-2xl">
+                #
+              </th>
+              <th className="bg-secondary-100 text-sm font-normal py-1.5">
+                توضیحات
+              </th>
+              <th className="bg-secondary-100 text-sm font-normal py-1.5">
+                زمان تحویل
+              </th>
+              <th className="bg-secondary-100 text-sm font-normal py-1.5">
+                هزینه
+              </th>
+              <th className="bg-secondary-100 text-sm font-normal py-1.5 rounded-tl-2xl">
+                وضعیت
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoadingList ? (
+              <tr>
+                <td colSpan={4}>
+                  <div className="bg-secondary-50 flex items-center justify-center gap-2 h-[200px]">
+                    <span className="text-xs">در حال بارگذاری</span>
+                    <div className="animate-spin">
+                      <PiCircleNotchLight />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ) : !proposals?.length ? (
+              <tr>
+                <td colSpan={4}>
+                  <div className="bg-secondary-50 flex items-center justify-center gap-4 h-[200px]">
+                    <span className="text-xs">موردی یافت نشد</span>
+                    <div className="w-[150px] h-[150px]">
+                      <img
+                        src="/assets/images/not-found.svg"
+                        alt="not found"
+                        className="w-[150px]"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              proposals?.map((proposal) => (
+                <ProposalListItem
+                  key={proposal?._id}
+                  proposal={proposal}
+                  row={proposals.indexOf(proposal)}
+                />
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default ProposalsList;
