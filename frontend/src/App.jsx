@@ -8,6 +8,10 @@ import OwnerLayout from "./layout/OwnerLayout";
 import OwnerDashboardPage from "./pages/owner/OwnerDashboardPage";
 import OwnerProjectsPage from "./pages/owner/OwnerProjectsPage";
 import OwnerSingleProjectPage from "./pages/owner/OwnerSingleProjectPage";
+import FreelancerLayout from "./layout/FreelancerLayout";
+import FreelancerDashboardPage from "./pages/freelancer/FreelancerDashboardPage";
+import SubmitedProjectsPage from "./pages/freelancer/SubmitedProjectsPage";
+import { FreelancerProposalsPage } from "./pages/freelancer/FreelancerProposalsPage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -23,6 +27,12 @@ function App() {
           <Route path="dashboard" element={<OwnerDashboardPage />} />
           <Route path="projects" element={<OwnerProjectsPage />} />
           <Route path="projects/:id" element={<OwnerSingleProjectPage />} />
+        </Route>
+        <Route path="/freelancer" element={<FreelancerLayout />}>
+          <Route index element={<Navigate to={"dashboard"} replace />} />
+          <Route path="dashboard" element={<FreelancerDashboardPage />} />
+          <Route path="proposals" element={<FreelancerProposalsPage />} />
+          <Route path="projects" element={<SubmitedProjectsPage />} />
         </Route>
       </Routes>
     </QueryClientProvider>
