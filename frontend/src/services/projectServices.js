@@ -25,3 +25,7 @@ export async function removeOwnerProject(id) {
 export async function getProjectInfo(id) {
   return api.get(`/project/${id}`).then(({ data }) => data.data);
 }
+
+export async function getAllProjectsFn() {
+  return api.get("/project/list").then(({ data }) => data.data);
+}

@@ -1,5 +1,7 @@
+import ProjectList from "../../components/freelancer/projects/list/ProjectList";
+
 const SubmitedProjectsPage = () => {
-  return <div>SubmitedProjectsPage</div>;
+  return <ProjectList />;
 };
 
 export default SubmitedProjectsPage;

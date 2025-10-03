@@ -22,7 +22,7 @@ const statusStyle = [
 const ProposalListItem = ({ proposal, row }) => {
   const { status } = proposal;
   return (
-    <tr>
+    <tr className="even:bg-primary-50/50">
       <td className="text-xs py-1.5 px-1 text-center">
         {toPersianNumbers(row + 1)}
       </td>
