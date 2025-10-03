@@ -7,3 +7,7 @@ export async function changeProposalStatusApi({ id, formData }) {
 export async function getFreelancerProposals() {
   return api.get("/proposal/list").then(({ data }) => data?.data);
 }
+
+export async function createProposalApi(formData) {
+  return api.post("/proposal/add", formData).then(({ data }) => data?.data);
+}

@@ -1,11 +1,16 @@
+import { PiNotePencilFill } from "react-icons/pi";
+import Modal from "../../../../ui/Modal";
 import toLocalDateShort from "../../../../utils/toLocalDateShort";
 import {
   toPersianNumbers,
   toPersianNumbersWithComma,
 } from "../../../../utils/toPersianNumbers";
 import truncateText from "../../../../utils/truncateText";
+import { useState } from "react";
+import CreateProposal from "../../proposals/create/CreateProposal";
 
 const ProjectListItem = ({ project, row }) => {
+  const [open, setOpen] = useState(false);
   return (
     <tr className="even:bg-primary-50/50">
       <td className="text-xs py-1.5 px-1 text-center">
@@ -29,19 +34,20 @@ const ProjectListItem = ({ project, row }) => {
         </span>
       </td>
       <td className="text-xs py-1.5 px-1 text-center">
-        {/* <Modal
-              open={open}
+        {open && (
+          <Modal
+            onClose={() => setOpen(false)}
+            title={`درخواست انجام پروژه ${project?.title}`}
+          >
+            <CreateProposal
+              projectId={project._id}
               onClose={() => setOpen(false)}
-              title={`درخواست انجام پروژه ${title}`}
-            >
-              <CreateProposal
-                projectId={project._id}
-                onClose={() => setOpen(false)}
-              />
-            </Modal>
-            <button onClick={() => setOpen(true)}>
-              <MdAssignmentAdd className="w-5 h-5 text-primary-900" />
-            </button> */}
+            />
+          </Modal>
+        )}
+        <button onClick={() => setOpen(true)}>
+          <PiNotePencilFill className="text-primary-900 text-xl cursor-pointer" />
+        </button>
       </td>
     </tr>
   );
