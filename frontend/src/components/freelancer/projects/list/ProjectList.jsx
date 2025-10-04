@@ -1,6 +1,7 @@
 import { PiCircleNotchLight } from "react-icons/pi";
 import useAllProjects from "../../../../hooks/useAllProjects";
 import ProjectListItem from "./ProjectListItem";
+import FilterCompnent from "./filter-component/FilterCompnent";
 
 const ProjectList = () => {
   const { data, isLoadingList } = useAllProjects();
@@ -8,8 +9,10 @@ const ProjectList = () => {
   return (
     <div className="space-y-4">
       {/* filter */}
+      <FilterCompnent />
+      {/* list */}
       <div className="w-full overflow-x-auto">
-        <table className="min-w-[600px] w-[90%] overflow-x-auto mx-">
+        <table className="min-w-[600px] w-[90%] overflow-x-auto">
           <thead>
             <tr>
               <th className="bg-secondary-100 text-sm font-normal py-1.5 rounded-tr-2xl">

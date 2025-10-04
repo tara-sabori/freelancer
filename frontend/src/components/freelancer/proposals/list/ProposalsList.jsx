@@ -32,7 +32,7 @@ const ProposalsList = () => {
           <tbody>
             {isLoadingList ? (
               <tr>
-                <td colSpan={4}>
+                <td colSpan={5}>
                   <div className="bg-secondary-50 flex items-center justify-center gap-2 h-[200px]">
                     <span className="text-xs">در حال بارگذاری</span>
                     <div className="animate-spin">
@@ -43,7 +43,7 @@ const ProposalsList = () => {
               </tr>
             ) : !proposals?.length ? (
               <tr>
-                <td colSpan={4}>
+                <td colSpan={5}>
                   <div className="bg-secondary-50 flex items-center justify-center gap-4 h-[200px]">
                     <span className="text-xs">موردی یافت نشد</span>
                     <div className="w-[150px] h-[150px]">
