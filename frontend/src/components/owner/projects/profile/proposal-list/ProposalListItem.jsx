@@ -27,27 +27,32 @@ const ProposalListItem = ({ proposal, row }) => {
   const [open, setOpen] = useState(false);
   return (
     <tr>
-      <td className="text-xs py-1.5 px-1 text-center">
+      <td className="text-xs p-1.5 px-1 text-center">
         {toPersianNumbers(row + 1)}
       </td>
-      <td className="text-xs py-1.5 px-1 text-center">{user.name}</td>
-      <td className="text-xs py-1.5 px-1 text-center">
+      <td className="text-xs p-1.5 px-1 text-center whitespace-nowrap">
+        {user.name}
+      </td>
+      <td
+        className="text-xs p-1.5 px-1 text-center"
+        title={proposal.description}
+      >
         <p>{truncateText(proposal.description, 50)}</p>
       </td>
-      <td className="text-xs py-1.5 px-1 text-center">
+      <td className="text-xs p-1.5 px-1 text-center">
         {toPersianNumbers(proposal.duration)} روز
       </td>
-      <td className="text-xs py-1.5 px-1 text-center">
+      <td className="text-xs p-1.5 px-1 text-center">
         {toPersianNumbersWithComma(proposal.price)}
       </td>
-      <td className="text-xs py-1.5 px-1 text-center">
+      <td className="text-xs p-1.5 px-1 text-center">
         <span
-          className={`inline-block whitespace-nowrap rounded-xl px-2 py-0.5 text-white ${statusStyle[status].className}`}
+          className={`inline-block whitespace-nowrap rounded-xl px-2 p-0.5 text-white ${statusStyle[status].className}`}
         >
           {statusStyle[status].label}
         </span>
       </td>
-      <td className="text-xs py-1.5 px-1 text-center">
+      <td className="text-xs p-1.5 px-1 text-center">
         {open && (
           <Modal title="تغییر وضعیت درخواست" onClose={() => setOpen(false)}>
             <ChangeProposalStatus

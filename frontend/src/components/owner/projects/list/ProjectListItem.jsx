@@ -23,27 +23,24 @@ const ProjectListItem = ({ project, row }) => {
   const { isDeleting, removeProjectFunction } = useRemoveProject();
   return (
     <tr className="even:bg-primary-50/50">
-      <td className="text-xs py-1.5 px-1 text-center">
+      <td className="text-xs p-1.5 px-1 text-center">
         {toPersianNumbers(row + 1)}
       </td>
-      <td className="text-xs py-1.5 text-center">
+      <td className="text-xs p-1.5 text-center whitespace-nowrap">
         {truncateText(project?.title, 30)}
       </td>
-      <td className="text-xs py-1.5 text-center">
-        {" "}
-        {project?.category?.title}
-      </td>
-      <td className="text-xs py-1.5 text-center">
+      <td className="text-xs p-1.5 text-center"> {project?.category?.title}</td>
+      <td className="text-xs p-1.5 text-center">
         {toPersianNumbersWithComma(project?.budget)}
       </td>
-      <td className="text-xs py-1.5 text-center">
+      <td className="text-xs p-1.5 text-center">
         {toLocalDateShort(project?.deadline)}
       </td>
-      <td className="text-xs py-1.5">
+      <td className="text-xs p-1.5">
         <div className="flex flex-wrap items-center justify-center gap-2 max-w-[200px] mx-auto">
           {project?.tags.map((tag) => (
             <span
-              className="inline-block whitespace-nowrap rounded-xl px-2 py-0.5 bg-secondary-200 text-secondary-600"
+              className="inline-block whitespace-nowrap rounded-xl px-2 p-0.5 bg-secondary-200 text-secondary-600"
               key={tag}
             >
               {tag}
@@ -51,10 +48,10 @@ const ProjectListItem = ({ project, row }) => {
           ))}
         </div>
       </td>
-      <td className="text-xs py-1.5 text-center">
+      <td className="text-xs p-1.5 text-center whitespace-nowrap">
         {project?.freelancer?.name || "-"}
       </td>
-      <td className="text-xs py-1.5 text-center">
+      <td className="text-xs p-1.5 text-center">
         <ToggleStatus status={project?.status} projectId={project?._id} />
       </td>
       <td>
