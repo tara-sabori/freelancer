@@ -20,7 +20,7 @@ const Modal = ({ title, children, onClose, className = "" }) => {
           </span>
           <PiX className="cursor-pointer" onClick={onClose} />
         </div>
-        <div className="p-4 py-2 overflow-y-auto max-h-[calc(90vh-2rem)] text-right">
+        <div className="p-4 py-2 overflow-y-auto max-h-[70vh] md:max-h-[calc(90vh-2rem)] text-right">
           {children}
         </div>
       </div>
