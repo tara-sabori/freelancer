@@ -1,4 +1,3 @@
-import React from "react";
 import Stat from "../../../ui/Stat";
 import { PiCardsThreeFill, PiGridFourFill, PiStackBold } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
@@ -11,9 +10,9 @@ const OwnerDashboard = () => {
     retry: false,
   });
   const projects = data?.projects;
-  const numOfAcceptedProjects = projects?.filter((p) => p.freelancer)?.length;
+  const numOfAcceptedProjects = projects?.filter((p) => p?.freelancer)?.length;
   const numOfProposals = projects?.reduce(
-    (acc, curr) => curr.proposals.length + acc,
+    (acc, curr) => curr?.proposals?.length + acc,
     0,
   );
   console.log(projects);
@@ -31,19 +30,19 @@ const OwnerDashboard = () => {
           icon={<PiGridFourFill className="text-primary-900 text-2xl" />}
           className={"bg-primary-100 p-3"}
           title={"پروژه‌ها"}
-          value={projects?.length}
+          value={projects?.length || 0}
         />
         <Stat
           icon={<PiStackBold className="text-purple-700 text-2xl" />}
           className={"bg-purple-100 p-3"}
           title={"پروژه‌های واگذار شده"}
-          value={numOfAcceptedProjects}
+          value={numOfAcceptedProjects || 0}
         />
         <Stat
           icon={<PiCardsThreeFill className="text-orange-600 text-2xl" />}
           className={"bg-orange-100 p-3"}
           title={"درخواست‌ها"}
-          value={numOfProposals}
+          value={numOfProposals || 0}
         />
       </div>
     </div>
