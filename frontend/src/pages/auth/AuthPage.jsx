@@ -1,8 +1,7 @@
-import React from 'react';
-import MainAuth from '../../components/authentication/MainAuth';
+import MainAuth from "../../components/authentication/MainAuth";
 
 const AuthPage = () => {
-    return <MainAuth />
-}
+  return <MainAuth />;
+};
 
 export default AuthPage;
