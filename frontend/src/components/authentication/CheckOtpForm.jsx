@@ -150,7 +150,6 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
       console.log(user);
       toast.success(message);
       if (!user?.isActive) {
-        console.log("kk");
         return navigate("/complete-profile");
       }
       if (user?.status !== 2) {
@@ -160,8 +159,10 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
       }
       if (user?.role === "OWNER") {
         navigate("/owner");
-      } else {
+      } else if (user?.role === "FREELANCER") {
         navigate("/freelancer");
+      } else {
+        navigate("/admin");
       }
     } catch (error) {
       console.log(error);
@@ -222,7 +223,7 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
           </button>
         )}
       </div>
-      <SubmitButton disabled={otp?.length < 6}>تایید</SubmitButton>
+      <SubmitButton disabled={otp?.length < 6 || isPending}>تایید</SubmitButton>
     </form>
   );
 };
