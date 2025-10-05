@@ -1,8 +1,8 @@
 import { useSearchParams } from "react-router";
 
 const FilterDropDown = ({ filterField, options, isLoading = false }) => {
-  const [searchParams, setSearchParams] = useSearchParams() || "ALL";
-  const value = searchParams.get(filterField);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const value = searchParams.get(filterField) || "ALL";
   const handleChange = (e) => {
     searchParams.set(filterField, e.target.value);
     setSearchParams(searchParams);

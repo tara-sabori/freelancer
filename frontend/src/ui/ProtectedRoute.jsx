@@ -5,22 +5,22 @@ import { useEffect } from "react";
 
 const ProtectedRoute = ({ children }) => {
   const { userData, isLoadingUser } = useUser();
-  const user = userData?.user || {};
+  const user = userData?.user || null;
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const role = pathname?.split("/")?.at(1);
   const isAuthorize = role === user?.role?.toLocaleLowerCase();
-  const isVerfiy = user?.status === 2 || user?.isActive;
+  const isVerfiy = user?.status === 2 && user?.isActive;
 
   useEffect(() => {
     if (isLoadingUser) return;
     if (!user) {
       navigate("/", { replace: true });
-      toast.error("برای دسترسی یه این صفحه وارد حساب کاربری خود شوید.");
+      toast.error("برای دسترسی به این صفحه وارد حساب کاربری خود شوید.");
     } else if (!isVerfiy) {
       navigate("/", { replace: true });
       toast.error(
-        "برای دسترسی یه این صفحه باید حساب کاربری شما توسط ادمین فعال شود.",
+        "برای دسترسی به این صفحه باید حساب کاربری شما توسط ادمین فعال شود.",
       );
     } else if (!isAuthorize) {
       navigate("/", { replace: true });
