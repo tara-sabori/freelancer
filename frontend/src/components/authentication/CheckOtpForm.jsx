@@ -164,6 +164,8 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
       } else {
         navigate("/admin");
       }
+      sessionStorage.removeItem("time");
+      sessionStorage.removeItem("phoneNumber");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
