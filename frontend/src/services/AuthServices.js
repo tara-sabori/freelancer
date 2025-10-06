@@ -21,3 +21,13 @@ export async function getUser() {
 export async function signOutApi() {
   return api.post("/user/logout").then(({ data }) => data?.data);
 }
+
+export async function getUserListApi() {
+  return api.get("/admin/user/list").then(({ data }) => data?.data);
+}
+
+export async function changeUserStatusApi({ id, formData }) {
+  return api
+    .patch(`/admin/user/verify/${id}`, formData)
+    .then(({ data }) => data?.data);
+}
