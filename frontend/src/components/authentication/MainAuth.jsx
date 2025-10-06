@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { useSearchParams } from "react-router";
+import { useState } from "react";
+import { Navigate, useSearchParams } from "react-router";
 import SendOtpForm from "./SendOtpForm";
 import CheckOtpForm from "./CheckOtpForm";
 import { useMutation } from "@tanstack/react-query";
 import { getOtp } from "../../services/AuthServices";
+import NotFound from "../../pages/NotFound";
+import useUser from "../../hooks/useUser";
+import Loading from "../../ui/Loading";
 
 const MainAuth = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,6 +21,10 @@ const MainAuth = () => {
   } = useMutation({
     mutationFn: getOtp,
   });
+
+  const { userData, isLoadingUser } = useUser();
+  const user = userData?.user || null;
+
   const sendOTP = async () => {
     const formData = { phoneNumber };
     const oldPhone = sessionStorage.getItem("phoneNumber");
@@ -51,6 +58,8 @@ const MainAuth = () => {
       console.log(error);
     }
   };
+  if (isLoadingUser) return <Loading />;
+  if (user) return <Navigate to="/" replace />;
   return (
     <div className="mx-auto sm:max-w-sm p-3 pt-10">
       {currentStep === "1" ? (
@@ -67,7 +76,7 @@ const MainAuth = () => {
           setCurrentStep={setCurrentStep}
         />
       ) : (
-        <p>not found</p>
+        <NotFound />
       )}
     </div>
   );
