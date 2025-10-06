@@ -3,10 +3,11 @@ import useProfileProject from "../../../../hooks/useProfileProject";
 import { PiCaretLeftLight } from "react-icons/pi";
 // import ProjectHeader from "./ProjectHeader";
 import ProposalsList from "./proposal-list/ProposalsList";
+import Loading from "../../../../ui/Loading";
 
 const MainProfileProject = () => {
   const { data, isPending, isFetching } = useProfileProject();
-  const project = data?.project || {};
+  const project = data?.project || null;
   console.log(project);
   const moveBack = useMoveBack();
   return (
@@ -22,9 +23,11 @@ const MainProfileProject = () => {
       </div>
       <>
         {isPending ? (
-          <p>loading.....</p>
+          <Loading />
         ) : !project ? (
-          <p>not found</p>
+          <p className="font-bold text-secondary-700">
+            پروژه‌ای که دنبالش بودید یافت نشد.
+          </p>
         ) : (
           <div className="space-y-6 w-full md:max-w-3xl mx-auto">
             {/* <ProjectHeader project={project} /> */}

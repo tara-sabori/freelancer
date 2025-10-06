@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router";
 import useUser from "../hooks/useUser";
 import { useEffect } from "react";
+import Loading from "./Loading";
 
 const ProtectedRoute = ({ children }) => {
   const { userData, isLoadingUser } = useUser();
@@ -29,7 +30,7 @@ const ProtectedRoute = ({ children }) => {
   }, [user, navigate, isAuthorize, isVerfiy, isLoadingUser]);
 
   if (isLoadingUser) {
-    return <div>loading...</div>;
+    return <Loading />;
   }
   if (isAuthorize && isVerfiy) return children;
 };

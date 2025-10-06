@@ -2,6 +2,7 @@ import Stat from "../../../ui/Stat";
 import { PiCardsThreeFill, PiGridFourFill, PiStackBold } from "react-icons/pi";
 import { useQuery } from "@tanstack/react-query";
 import { getOwnerProject } from "../../../services/projectServices";
+import Loading from "../../../ui/Loading";
 
 const OwnerDashboard = () => {
   const { isPending, isFetching, data } = useQuery({
@@ -16,7 +17,7 @@ const OwnerDashboard = () => {
     0,
   );
   console.log(projects);
-  if (isPending) return <div>loading</div>;
+  if (isPending) return <Loading />;
   return (
     <div className="space-y-6">
       <div className="space-y-2">

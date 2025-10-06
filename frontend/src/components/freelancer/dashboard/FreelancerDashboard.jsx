@@ -6,13 +6,14 @@ import {
 import useFreelancerProposal from "../../../hooks/useFreelancerProposal";
 import Stat from "../../../ui/Stat";
 import { toPersianNumbersWithComma } from "../../../utils/toPersianNumbers";
+import Loading from "../../../ui/Loading";
 
 const FreelancerDashboard = () => {
   const { data, isLoadingList } = useFreelancerProposal();
   const proposals = data?.proposals || [];
   const acceptedProposals = proposals?.filter((p) => p?.status === 2);
   const salary = acceptedProposals?.reduce((acc, curr) => acc + curr?.price, 0);
-  if (isLoadingList) return <div>loading</div>;
+  if (isLoadingList) return <Loading />;
   return (
     <div className="space-y-6">
       <div className="space-y-2">
