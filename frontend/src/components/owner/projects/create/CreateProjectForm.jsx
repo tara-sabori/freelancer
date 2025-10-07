@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import TextField from "../../../../ui/TextField";
 import SubmitButton from "../../../../ui/SubmitButton";
 import { useState } from "react";
@@ -16,17 +16,19 @@ const CreateProjectForm = ({ onClose, project = {} }) => {
     formState: { errors },
     handleSubmit,
     reset,
+    control,
   } = useForm({
     defaultValues: {
       title: project?.title,
       description: project?.description,
       budget: project?.budget,
       category: project?.category?._id,
+      deadline: project?.deadline,
     },
   });
 
   const [tagsList, setTagsList] = useState(project?.tags || []);
-  const [date, setDate] = useState(project?.deadline || "");
+  // const [date, setDate] = useState(project?.deadline || "");
   const { categories, isLoadingCategory } = useCategories();
 
   const { isCreating, createProjectFunction } = useCreateProject();
@@ -34,7 +36,7 @@ const CreateProjectForm = ({ onClose, project = {} }) => {
 
   const onSubmit = (data) => {
     const formData = {
-      deadline: date,
+      // deadline: date,
       tags: tagsList,
       ...data,
     };
@@ -57,7 +59,6 @@ const CreateProjectForm = ({ onClose, project = {} }) => {
           reset();
         },
       });
-      console.log(data);
     }
   };
 
@@ -94,15 +95,35 @@ const CreateProjectForm = ({ onClose, project = {} }) => {
         required
         validationSchema={{
           required: "این فیلد الزامی است.",
+          pattern: {
+            value: /^\d+$/,
+            message: "فقط عدد مجاز است.",
+          },
         }}
       />
 
-      <DatePickerField
+      <Controller
+        name="deadline"
+        control={control}
+        rules={{ required: "این فیلد الزامی است." }}
+        render={({ field }) => (
+          <DatePickerField
+            name="deadline"
+            value={field?.value}
+            onChange={field.onChange}
+            label={"تاریخ پایان"}
+            required
+            errors={errors}
+          />
+        )}
+      />
+
+      {/* <DatePickerField
         date={date}
         setDate={setDate}
         label={"تاریخ پایان"}
         required
-      />
+      /> */}
 
       <CreateProjectTag tagsList={tagsList} setTagsList={setTagsList} />
 

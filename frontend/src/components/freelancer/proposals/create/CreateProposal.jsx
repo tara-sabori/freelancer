@@ -58,6 +58,10 @@ const CreateProposal = ({ projectId, onClose }) => {
         required
         validationSchema={{
           required: "این فیلد الزامی است.",
+          pattern: {
+            value: /^\d+$/,
+            message: "فقط عدد مجاز است.",
+          },
         }}
       />
 
