@@ -5,6 +5,7 @@ const FilterDropDown = ({ filterField, options, isLoading = false }) => {
   const value = searchParams.get(filterField) || "ALL";
   const handleChange = (e) => {
     searchParams.set(filterField, e.target.value);
+    searchParams.set("page", 1);
     setSearchParams(searchParams);
   };
   return (

@@ -5,6 +5,7 @@ const FilterButton = ({ filterField, title, data }) => {
   const value = searchParams.get(filterField) || "ALL";
   const handleClick = (item) => {
     searchParams.set(filterField, item);
+    searchParams.set("page", 1);
     setSearchParams(searchParams);
   };
   return (
