@@ -1,19 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import { PiCircleNotchLight, PiPlusBold } from "react-icons/pi";
+import { useSearchParams } from "react-router";
 import { useState } from "react";
 import { getOwnerProject } from "../../../../services/projectServices";
 import Modal from "../../../../ui/Modal";
 import CreateProjectForm from "../create/CreateProjectForm";
 import ProjectListItem from "./ProjectListItem";
+import Paginate from "../../../../ui/Paginate";
 
 const MainProjectList = () => {
+  const [serachParams] = useSearchParams();
+  const page = serachParams.get("page");
+  const currentPage = page || 1;
+
   const [showCreateForm, setShowCreateForm] = useState(false);
   const { isPending, isFetching, data } = useQuery({
     queryKey: ["owner-projects"],
     queryFn: getOwnerProject,
     retry: false,
   });
-  const projects = data?.projects;
+  const projects = data?.projects || [];
+
+  const lastIndex = currentPage * 10;
+  const firstIndex = lastIndex - 10;
+  const records = projects?.slice(firstIndex, lastIndex);
+  const pageCount = Math.ceil(projects?.length / 10);
+
   return (
     <div className="space-y-4">
       {showCreateForm && (
@@ -79,7 +91,7 @@ const MainProjectList = () => {
                   </div>
                 </td>
               </tr>
-            ) : !projects?.length ? (
+            ) : !records?.length ? (
               <tr>
                 <td colSpan={10}>
                   <div className="bg-secondary-50 flex items-center justify-center gap-4 h-[200px]">
@@ -95,7 +107,7 @@ const MainProjectList = () => {
                 </td>
               </tr>
             ) : (
-              projects?.map((project) => (
+              records?.map((project) => (
                 <ProjectListItem
                   key={project?._id}
                   project={project}
@@ -106,6 +118,9 @@ const MainProjectList = () => {
           </tbody>
         </table>
       </div>
+      {!isFetching && !isPending && records?.length > 0 && (
+        <Paginate pageCount={pageCount} />
+      )}
     </div>
   );
 };

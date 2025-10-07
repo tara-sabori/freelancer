@@ -1,14 +1,26 @@
+import { useState } from "react";
+import { useSearchParams } from "react-router";
 import { PiCircleNotchLight, PiPlusBold } from "react-icons/pi";
 import useCategories from "../../../../hooks/useCategories";
 import CategoryListItem from "./CategoryListItem";
-import { useState } from "react";
 import Modal from "../../../../ui/Modal";
 import CreateCategoryForm from "../create/CreateCategoryForm";
+import Paginate from "../../../../ui/Paginate";
 
 const CategoriesList = () => {
+  const [serachParams] = useSearchParams();
+  const page = serachParams.get("page");
+  const currentPage = page || 1;
+
   const [showCreateForm, setShowCreateForm] = useState(false);
   const { categories, isLoadingCategory, isFetching } = useCategories();
   console.log(categories);
+
+  const lastIndex = currentPage * 10;
+  const firstIndex = lastIndex - 10;
+  const records = categories?.slice(firstIndex, lastIndex);
+  const pageCount = Math.ceil(categories?.length / 10);
+
   return (
     <div className="space-y-6">
       {showCreateForm && (
@@ -62,7 +74,7 @@ const CategoriesList = () => {
                   </div>
                 </td>
               </tr>
-            ) : !categories?.length ? (
+            ) : !records?.length ? (
               <tr>
                 <td colSpan={5}>
                   <div className="bg-secondary-50 flex items-center justify-center gap-4 h-[200px]">
@@ -78,7 +90,7 @@ const CategoriesList = () => {
                 </td>
               </tr>
             ) : (
-              categories?.map((category) => (
+              records?.map((category) => (
                 <CategoryListItem
                   key={category?._id}
                   category={category}
@@ -89,6 +101,9 @@ const CategoriesList = () => {
           </tbody>
         </table>
       </div>
+      {!isLoadingCategory && !isFetching && records?.length > 0 && (
+        <Paginate pageCount={pageCount} />
+      )}
     </div>
   );
 };

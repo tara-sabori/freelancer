@@ -1,11 +1,23 @@
+import { useSearchParams } from "react-router";
 import { PiCircleNotchLight } from "react-icons/pi";
 import useUserList from "../../../hooks/useUserList";
 import UserListItem from "./UserListItem";
+import Paginate from "../../../ui/Paginate";
 
 const UsersList = () => {
+  const [serachParams] = useSearchParams();
+  const page = serachParams.get("page");
+  const currentPage = page || 1;
+
   const { userList, isFetching, isLoadingList } = useUserList();
   const users = userList?.users?.filter((u) => u?.role !== "ADMIN") || [];
   console.log(users);
+
+  const lastIndex = currentPage * 10;
+  const firstIndex = lastIndex - 10;
+  const records = users?.slice(firstIndex, lastIndex);
+  const pageCount = Math.ceil(users?.length / 10);
+
   return (
     <div className="space-y-4">
       <h3 className="font-semibold text-secondary-700">لیست کاربران</h3>
@@ -48,7 +60,7 @@ const UsersList = () => {
                   </div>
                 </td>
               </tr>
-            ) : !users?.length ? (
+            ) : !records?.length ? (
               <tr>
                 <td colSpan={7}>
                   <div className="bg-secondary-50 flex items-center justify-center gap-4 h-[200px]">
@@ -64,7 +76,7 @@ const UsersList = () => {
                 </td>
               </tr>
             ) : (
-              users?.map((user) => (
+              records?.map((user) => (
                 <UserListItem
                   key={user?._id}
                   user={user}
@@ -75,6 +87,9 @@ const UsersList = () => {
           </tbody>
         </table>
       </div>
+      {!isLoadingList && !isFetching && records?.length > 0 && (
+        <Paginate pageCount={pageCount} />
+      )}
     </div>
   );
 };

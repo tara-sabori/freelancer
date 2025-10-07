@@ -1,10 +1,22 @@
+import { useSearchParams } from "react-router";
 import { PiCircleNotchLight } from "react-icons/pi";
 import ProposalListItem from "./ProposalListItem";
 import useFreelancerProposal from "../../../hooks/useFreelancerProposal";
+import Paginate from "../../../ui/Paginate";
 
 const ProposalsList = () => {
+  const [serachParams] = useSearchParams();
+  const page = serachParams.get("page");
+  const currentPage = page || 1;
+
   const { data, isLoadingList } = useFreelancerProposal();
   const proposals = data?.proposals || [];
+
+  const lastIndex = currentPage * 10;
+  const firstIndex = lastIndex - 10;
+  const records = proposals?.slice(firstIndex, lastIndex);
+  const pageCount = Math.ceil(proposals?.length / 10);
+
   return (
     <div className="space-y-4">
       <h3 className="font-semibold text-secondary-700">لیست کل درخواست‌ها</h3>
@@ -41,7 +53,7 @@ const ProposalsList = () => {
                   </div>
                 </td>
               </tr>
-            ) : !proposals?.length ? (
+            ) : !records?.length ? (
               <tr>
                 <td colSpan={5}>
                   <div className="bg-secondary-50 flex items-center justify-center gap-4 h-[200px]">
@@ -57,7 +69,7 @@ const ProposalsList = () => {
                 </td>
               </tr>
             ) : (
-              proposals?.map((proposal) => (
+              records?.map((proposal) => (
                 <ProposalListItem
                   key={proposal?._id}
                   proposal={proposal}
@@ -68,6 +80,9 @@ const ProposalsList = () => {
           </tbody>
         </table>
       </div>
+      {!isLoadingList && records?.length > 0 && (
+        <Paginate pageCount={pageCount} />
+      )}
     </div>
   );
 };

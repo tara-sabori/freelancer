@@ -1,11 +1,23 @@
+import { useSearchParams } from "react-router";
 import { PiCircleNotchLight } from "react-icons/pi";
 import useAllProjects from "../../../../hooks/useAllProjects";
 import ProjectListItem from "./ProjectListItem";
 import FilterCompnent from "./filter-component/FilterCompnent";
+import Paginate from "../../../../ui/Paginate";
 
 const ProjectList = () => {
+  const [serachParams] = useSearchParams();
+  const page = serachParams.get("page");
+  const currentPage = page || 1;
+
   const { data, isLoadingList } = useAllProjects();
   const projects = data?.projects || [];
+
+  const lastIndex = currentPage * 10;
+  const firstIndex = lastIndex - 10;
+  const records = projects?.slice(firstIndex, lastIndex);
+  const pageCount = Math.ceil(projects?.length / 10);
+
   return (
     <div className="space-y-4">
       {/* filter */}
@@ -47,7 +59,7 @@ const ProjectList = () => {
                   </div>
                 </td>
               </tr>
-            ) : !projects?.length ? (
+            ) : !records?.length ? (
               <tr>
                 <td colSpan={6}>
                   <div className="bg-secondary-50 flex items-center justify-center gap-4 h-[200px]">
@@ -63,7 +75,7 @@ const ProjectList = () => {
                 </td>
               </tr>
             ) : (
-              projects?.map((project) => (
+              records?.map((project) => (
                 <ProjectListItem
                   key={project?._id}
                   project={project}
@@ -74,6 +86,9 @@ const ProjectList = () => {
           </tbody>
         </table>
       </div>
+      {!isLoadingList && records?.length > 0 && (
+        <Paginate pageCount={pageCount} />
+      )}
     </div>
   );
 };

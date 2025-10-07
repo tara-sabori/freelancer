@@ -8,10 +8,10 @@ const { ProposalModel } = require("../../../models/proposal");
 class UserController extends Controller {
   // ADMIN ROUTES :
   async getAllUsers(req, res) {
-    let { page, limit } = req.query;
-    page = page || 1;
-    limit = limit || 20;
-    const skip = (page - 1) * limit;
+    // let { page, limit } = req.query;
+    // page = page || 1;
+    // limit = limit || 20;
+    // const skip = (page - 1) * limit;
     const { search } = req.query;
     const searchTerm = new RegExp(search, "ig");
     // const databaseQuery = {};
@@ -23,8 +23,8 @@ class UserController extends Controller {
         { phoneNumber: searchTerm },
       ],
     })
-      .limit(limit)
-      .skip(skip)
+      // .limit(limit)
+      // .skip(skip)
       .sort({
         createdAt: -1,
       });
