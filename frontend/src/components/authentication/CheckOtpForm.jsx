@@ -154,7 +154,7 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
       }
       if (user?.status !== 2) {
         navigate("/");
-        toast.error("پروقایل شما در انتظار تایید است.");
+        toast.error("پروفایل شما در انتظار تایید است.");
         return;
       }
       if (user?.role === "OWNER") {
