@@ -5,6 +5,7 @@ import { getAllProjectsFn } from "../services/projectServices";
 export default function useAllProjects() {
   const { search } = useLocation();
   const queryObject = Object.fromEntries(new URLSearchParams(search));
+  delete queryObject?.page;
 
   const { data, isPending: isLoadingList } = useQuery({
     queryKey: ["all-projects", queryObject],
