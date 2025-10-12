@@ -4,30 +4,34 @@ import { PiX } from "react-icons/pi";
 
 const CreateProjectTag = ({ tagsList, setTagsList }) => {
   const [tag, setTag] = useState("");
-  const handleAddTag = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (
-        !tagsList?.find(
-          (t) =>
-            t?.toString()?.toLocaleLowerCase() ===
-            tag?.toString()?.toLocaleLowerCase(),
-        ) &&
-        tag?.length > 0
-      ) {
-        setTagsList([...tagsList, tag]);
-        setTag("");
-      } else if (
-        tagsList?.find(
-          (t) =>
-            t?.toString()?.toLocaleLowerCase() ===
-            tag?.toString()?.toLocaleLowerCase(),
-        )
-      ) {
-        toast.error("تگ تکراری است.");
-      }
+      handleAddTag();
     } else return;
   };
+  const handleAddTag = () => {
+    if (
+      !tagsList?.find(
+        (t) =>
+          t?.toString()?.toLocaleLowerCase() ===
+          tag?.toString()?.toLocaleLowerCase(),
+      ) &&
+      tag?.length > 0
+    ) {
+      setTagsList([...tagsList, tag]);
+      setTag("");
+    } else if (
+      tagsList?.find(
+        (t) =>
+          t?.toString()?.toLocaleLowerCase() ===
+          tag?.toString()?.toLocaleLowerCase(),
+      )
+    ) {
+      toast.error("تگ تکراری است.");
+    }
+  };
+
   const handleRemoveTag = (index) => {
     console.log(index);
     setTagsList(tagsList?.filter((t, idx) => idx !== index));
@@ -59,8 +63,10 @@ const CreateProjectTag = ({ tagsList, setTagsList }) => {
           value={tag}
           className="w-[40%] p-1 px-2 focus:outline-none bg-secondary-200 rounded-md text-sm"
           onChange={(e) => setTag(e.target.value)}
-          onKeyDown={handleAddTag}
+          onKeyDown={handleKeyDown}
           id="tag"
+          enterKeyHint="enter"
+          // inputMode="search"
         />
       </div>
     </div>
