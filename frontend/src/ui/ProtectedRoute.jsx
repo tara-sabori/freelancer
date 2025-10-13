@@ -16,16 +16,19 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     if (isLoadingUser) return;
     if (!user) {
-      navigate("/", { replace: true });
+      navigate("/auth", { replace: true });
       toast.error("برای دسترسی به این صفحه وارد حساب کاربری خود شوید.");
+      return;
     } else if (!isVerfiy) {
       navigate("/", { replace: true });
       toast.error(
         "برای دسترسی به این صفحه باید حساب کاربری شما توسط ادمین فعال شود.",
       );
+      return;
     } else if (!isAuthorize) {
       navigate("/", { replace: true });
       toast.error("شما به این صفحه دسترسی ندارید");
+      return;
     }
   }, [user, navigate, isAuthorize, isVerfiy, isLoadingUser]);
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import InputForm from "../../ui/InputForm";
+import InputForm from "../../../ui/InputForm";
 import { useMutation } from "@tanstack/react-query";
-import { completeProfile } from "../../services/AuthServices";
+import { completeProfile } from "../../../services/AuthServices";
 import toast from "react-hot-toast";
-import SubmitButton from "../../ui/SubmitButton";
+import SubmitButton from "../../../ui/SubmitButton";
 
 const CompleteProfileForm = () => {
   const navigate = useNavigate();

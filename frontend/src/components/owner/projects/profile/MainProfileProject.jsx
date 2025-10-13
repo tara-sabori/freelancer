@@ -37,6 +37,7 @@ const MainProfileProject = () => {
             <ProposalsList
               proposals={project?.proposals}
               isFetching={isFetching}
+              isFreelancer={project?.freelancer?._id}
             />
           </div>
         )}

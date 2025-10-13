@@ -8,7 +8,7 @@ const ProfileAvatar = ({ avatarUrl, name }) => {
           alt="avatar"
         />
       </div>
-      <span className="text-sm text-secondary-600">{name}</span>
+      <span className="text-xs md:text-sm text-secondary-600">{name}</span>
     </div>
   );
 };

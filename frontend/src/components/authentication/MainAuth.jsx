@@ -36,6 +36,8 @@ const MainAuth = () => {
       currentStep === "1" &&
       oldExpiry > now
     ) {
+      searchParams.set("step", "2");
+      setSearchParams(searchParams);
       setCurrentStep("2");
       return;
     }
@@ -52,7 +54,8 @@ const MainAuth = () => {
       console.log(data);
       if (currentStep === "1") {
         setCurrentStep("2");
-        setSearchParams(new URLSearchParams("?step=2"));
+        searchParams.set("step", "2");
+        setSearchParams(searchParams);
       }
     } catch (error) {
       console.log(error);

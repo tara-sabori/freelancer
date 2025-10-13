@@ -20,6 +20,8 @@ import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
 import AdminProposalsPage from "./pages/admin/AdminProposalsPage";
 import AdminProjectsPage from "./pages/admin/AdminProjectsPage";
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import ProfileMePage from "./pages/auth/ProfileMePage";
+import ProfileUpdatePage from "./pages/auth/ProfileUpdatePage";
 
 function App() {
   const queryClient = new QueryClient();
@@ -30,6 +32,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/complete-profile" element={<CompleteProfilePage />} />
+        <Route path="/profile/me" element={<ProfileMePage />} />
+        <Route path="/profile/me/update" element={<ProfileUpdatePage />} />
         <Route
           path="/owner"
           element={
