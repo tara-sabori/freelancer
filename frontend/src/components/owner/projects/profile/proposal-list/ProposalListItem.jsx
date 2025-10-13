@@ -6,6 +6,7 @@ import {
 import truncateText from "../../../../../utils/truncateText";
 import Modal from "../../../../../ui/Modal";
 import ChangeProposalStatus from "./ChangeProposalStatus";
+import toast from "react-hot-toast";
 
 const statusStyle = [
   {
@@ -22,9 +23,16 @@ const statusStyle = [
   },
 ];
 
-const ProposalListItem = ({ proposal, row }) => {
+const ProposalListItem = ({ proposal, row, isFreelancer }) => {
   const { status, user } = proposal;
   const [open, setOpen] = useState(false);
+  const clickHandler = () => {
+    if (isFreelancer && isFreelancer !== user?._id) {
+      toast?.error("برای این پروژه فریلنسر انتخاب شده است.");
+      return;
+    }
+    setOpen(true);
+  };
   return (
     <tr>
       <td className="text-xs p-1.5 px-1 text-center">
@@ -63,7 +71,7 @@ const ProposalListItem = ({ proposal, row }) => {
         )}
         <button
           className="cursor-pointer text-primary-900"
-          onClick={() => setOpen(true)}
+          onClick={clickHandler}
         >
           تغییر وضعیت
         </button>

@@ -45,9 +45,11 @@ const ProjectListItem = ({ project, row }) => {
             />
           </Modal>
         )}
-        <button onClick={() => setOpen(true)}>
-          <PiNotePencilFill className="text-primary-900 text-xl cursor-pointer" />
-        </button>
+        {project?.status === "OPEN" && (
+          <button onClick={() => setOpen(true)}>
+            <PiNotePencilFill className="text-primary-900 text-xl cursor-pointer" />
+          </button>
+        )}
       </td>
     </tr>
   );

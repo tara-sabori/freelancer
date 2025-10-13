@@ -88,7 +88,7 @@ const CreateProjectForm = ({ onClose, project = {} }) => {
       />
 
       <TextField
-        label={"بودجه"}
+        label={"بودجه (تومان)"}
         name={"budget"}
         errors={errors}
         register={register}

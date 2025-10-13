@@ -51,7 +51,7 @@ const CreateProposal = ({ projectId, onClose }) => {
       />
 
       <TextField
-        label={"هزینه"}
+        label={"هزینه (تومان)"}
         name={"price"}
         errors={errors}
         register={register}

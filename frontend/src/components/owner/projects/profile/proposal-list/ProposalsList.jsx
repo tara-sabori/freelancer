@@ -1,7 +1,7 @@
 import { PiCircleNotchLight } from "react-icons/pi";
 import ProposalListItem from "./ProposalListItem";
 
-const ProposalsList = ({ proposals, isFetching }) => {
+const ProposalsList = ({ proposals, isFetching, isFreelancer }) => {
   return (
     <div className="w-full overflow-x-auto">
       <table className="min-w-[500px] w-full overflow-x-auto mx-">
@@ -63,6 +63,7 @@ const ProposalsList = ({ proposals, isFetching }) => {
                 key={proposal?._id}
                 proposal={proposal}
                 row={proposals.indexOf(proposal)}
+                isFreelancer={isFreelancer}
               />
             ))
           )}
