@@ -27,7 +27,12 @@ const SendOtpForm = ({ onSubmit, isPending, setPhoneNumber, phoneNumber }) => {
           <input
             id="t1"
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            onChange={(e) => {
+              const newValue = e.target.value;
+              if (/^\d*$/.test(newValue)) {
+                setPhoneNumber(e.target.value);
+              }
+            }}
             className="border border-secondary-400 p-1.5 w-full rounded-md outline-none focus:shadow-sm bg-secondary-50"
             type="text"
           />

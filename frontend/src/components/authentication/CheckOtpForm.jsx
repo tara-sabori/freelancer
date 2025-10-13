@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import toast from "react-hot-toast";
 import SubmitButton from "../../ui/SubmitButton";
 import { useMutation } from "@tanstack/react-query";
@@ -8,6 +8,7 @@ import { formatTime } from "../../utils/formatTime";
 
 const DURATION = 90 * 1000;
 const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const length = 6;
   const [digits, setDigits] = useState(Array(length).fill("")); // کنترل‌شده
@@ -149,6 +150,10 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
       const { user, message } = await mutateAsync(formData);
       console.log(user);
       toast.success(message);
+
+      sessionStorage.removeItem("time");
+      sessionStorage.removeItem("phoneNumber");
+
       if (!user?.isActive) {
         return navigate("/complete-profile");
       }
@@ -164,8 +169,6 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
       } else {
         navigate("/admin");
       }
-      sessionStorage.removeItem("time");
-      sessionStorage.removeItem("phoneNumber");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -202,7 +205,11 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
         <button
           type="button"
           className="text-xs text-secondary-500 cursor-pointer"
-          onClick={() => setCurrentStep("1")}
+          onClick={() => {
+            searchParams.set("step", "1");
+            setSearchParams(searchParams);
+            setCurrentStep("1");
+          }}
         >
           ویرایش شماره موبایل
         </button>
