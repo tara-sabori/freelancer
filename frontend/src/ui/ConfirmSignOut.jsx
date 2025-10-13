@@ -6,7 +6,11 @@ const ConfirmSignOut = ({ onClose }) => {
   const { isPending, signOutFn } = useSignOut();
   const navigate = useNavigate();
   return (
-    <Modal title={"خروج از حساب کاربری"} onClose={onClose}>
+    <Modal
+      title={"خروج از حساب کاربری"}
+      onClose={onClose}
+      className="md:w-[400px]"
+    >
       <div className="space-y-8 py-2">
         <p className="text-sm">
           آیا می‌خواهید از حساب کاربری خود{" "}
