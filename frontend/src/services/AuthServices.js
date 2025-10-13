@@ -18,6 +18,11 @@ export async function getUser() {
   return api.get("/user/profile").then(({ data }) => data?.data);
 }
 
+export async function updateUser({ id, formData }) {
+  console.log(formData);
+  return api.patch(`/user/update`, formData).then(({ data }) => data?.data);
+}
+
 export async function signOutApi() {
   return api.post("/user/logout").then(({ data }) => data?.data);
 }

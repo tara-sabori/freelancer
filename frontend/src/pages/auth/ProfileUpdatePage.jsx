@@ -1,18 +1,18 @@
-import CompleteProfileForm from "../../components/authentication/profile/CompleteProfileForm";
+import ProfileUpdate from "../../components/authentication/profile/ProfileUpdate";
 import useUser from "../../hooks/useUser";
 import Loading from "../../ui/Loading";
 import { Navigate } from "react-router";
 
-const CompleteProfilePage = () => {
+const ProfileUpdatePage = () => {
   const { userData, isLoadingUser } = useUser();
   const user = userData?.user || null;
   return isLoadingUser ? (
     <Loading />
-  ) : user && !user?.isActive ? (
-    <CompleteProfileForm />
+  ) : user && user?.status === 2 ? (
+    <ProfileUpdate user={user} />
   ) : (
     <Navigate to={"/"} replace={true} />
   );
 };
 
-export default CompleteProfilePage;
+export default ProfileUpdatePage;
