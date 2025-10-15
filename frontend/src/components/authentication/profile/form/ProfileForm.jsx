@@ -29,7 +29,7 @@ const ProfileForm = ({ user = {} }) => {
       { id: user?._id, formData: data },
       {
         onSuccess: () => {
-          navigate("/profile/me");
+          navigate(-1);
           reset();
         },
       },

@@ -32,7 +32,7 @@ const ProfileMe = ({ user }) => {
               اطلاعات کاربری
             </p>
             <Link
-              to={"update"}
+              to={"/profile/me/update"}
               className="w-fit p-1.5 border border-primary-900 text-primary-900 text-xs rounded-md"
             >
               ویرایش اطلاعات
