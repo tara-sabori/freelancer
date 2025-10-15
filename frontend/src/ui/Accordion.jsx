@@ -9,7 +9,7 @@ const Accordion = ({ title, description }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-full cursor-pointer"
       >
-        <span className="font-semibold text-sm xl:text-base text-blue-950">
+        <span className="font-semibold text-sm xl:text-base text-blue-950 w-[90%]">
           {title}
         </span>
         <PiPlusBold
