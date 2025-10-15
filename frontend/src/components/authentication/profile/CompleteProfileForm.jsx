@@ -20,12 +20,12 @@ const CompleteProfileForm = () => {
     try {
       const { user, message } = await mutateAsync(formData);
       console.log(user);
-      toast.success(message);
       if (user?.status !== 2) {
         navigate("/");
-        toast.error("پروفایل شما در انتظار تایید است.");
+        toast.success("پروفایل شما ثبت شد و در انتظار تایید است.");
         return;
       }
+      toast.success(message);
       if (user?.role === "OWNER") {
         navigate("/owner");
       } else {
