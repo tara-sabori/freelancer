@@ -24,6 +24,7 @@ const MainAuth = () => {
 
   const { userData, isLoadingUser } = useUser();
   const user = userData?.user || null;
+  console.log(user);
 
   const sendOTP = async () => {
     const formData = { phoneNumber };
@@ -51,6 +52,8 @@ const MainAuth = () => {
       const newExpiry = Date.now() + 90000;
       sessionStorage.setItem("time", String(newExpiry));
       sessionStorage.setItem("phoneNumber", phoneNumber);
+      sessionStorage.setItem("resOTP", data?.message?.split(":")[1]);
+      // console.log(data?.message?.split(":")[1]);
       console.log(data);
       if (currentStep === "1") {
         setCurrentStep("2");
@@ -62,7 +65,7 @@ const MainAuth = () => {
     }
   };
   if (isLoadingUser) return <Loading />;
-  if (user) return <Navigate to="/" replace />;
+  if (user?._id) return <Navigate to="/" replace />;
   return (
     <div className="mx-auto sm:max-w-sm p-3 pt-10">
       {currentStep === "1" ? (

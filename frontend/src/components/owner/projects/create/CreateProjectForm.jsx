@@ -100,6 +100,7 @@ const CreateProjectForm = ({ onClose, project = {} }) => {
             message: "فقط عدد مجاز است.",
           },
         }}
+        inputMode="numeric"
       />
 
       <Controller

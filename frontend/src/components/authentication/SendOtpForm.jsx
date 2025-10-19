@@ -1,19 +1,19 @@
 import { PiCaretLeftLight } from "react-icons/pi";
-import useMoveBack from "../../hooks/useMoveBack";
 import SubmitButton from "../../ui/SubmitButton";
+import { useNavigate } from "react-router";
 
 const SendOtpForm = ({ onSubmit, isPending, setPhoneNumber, phoneNumber }) => {
   const submitHandle = (e) => {
     e?.preventDefault();
     onSubmit();
   };
-  const moveBack = useMoveBack();
+  const navigate = useNavigate();
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
         <button
           className="flex items-center gap-1 text-secondary-800 cursor-pointer"
-          onClick={moveBack}
+          onClick={() => navigate("/")}
         >
           <span className="text-sm">بازگشت</span>
           <PiCaretLeftLight />

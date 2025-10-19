@@ -32,7 +32,7 @@ const Guid = () => {
   return (
     <div className="container space-y-4 p-6 py-20">
       <h4 className="font-semibold text-lg text-shadow-sm text-blue-950">
-        نحوه برونسپاری پروژه‌ها در فریلاین
+        نحوه برونسپاری پروژه‌ها در فریلنسو
       </h4>
       <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {guidItems.map((item, index) => (

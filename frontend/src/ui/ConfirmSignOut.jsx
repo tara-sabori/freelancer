@@ -21,8 +21,8 @@ const ConfirmSignOut = ({ onClose }) => {
             onClick={() =>
               signOutFn(undefined, {
                 onSuccess: () => {
-                  onClose();
                   navigate("/");
+                  onClose();
                 },
               })
             }

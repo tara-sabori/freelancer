@@ -63,6 +63,7 @@ const CreateProposal = ({ projectId, onClose }) => {
             message: "فقط عدد مجاز است.",
           },
         }}
+        inputMode="numeric"
       />
 
       <SubmitButton disabled={isPending}>ثبت</SubmitButton>

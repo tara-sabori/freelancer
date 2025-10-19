@@ -10,25 +10,21 @@ const DURATION = 90 * 1000;
 const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const myResOTP = sessionStorage.getItem("resOTP");
+  const resOTP = myResOTP?.trimStart() || "";
   const length = 6;
   const [digits, setDigits] = useState(Array(length).fill("")); // کنترل‌شده
   const [otp, setOtp] = useState(""); // رشتهٔ نهایی
-  // const oldTime = sessionStorage.getItem("time");
-  // const [time, setTime] = useState(Number(oldTime) || 90);
   const [timeLeft, setTimeLeft] = useState(DURATION);
   const inputRefs = useRef([]);
 
-  // useEffect(() => {
-  //   const timer =
-  //     time > 0 &&
-  //     setInterval(() => {
-  //       setTime((t) => t - 1);
-  //       sessionStorage.setItem("time", time - 1);
-  //     }, 1000);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, [time]);
+  useEffect(() => {
+    if (resOTP) {
+      const otpDigits = resOTP.split("").slice(0, length);
+      setDigits(otpDigits);
+      setOtp(resOTP);
+    }
+  }, [resOTP]);
 
   useEffect(() => {
     const tick = () => {
@@ -149,10 +145,10 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
     try {
       const { user, message } = await mutateAsync(formData);
       console.log(user);
-      toast.success(message);
 
       sessionStorage.removeItem("time");
       sessionStorage.removeItem("phoneNumber");
+      sessionStorage.removeItem("resOTP");
 
       if (!user?.isActive) {
         return navigate("/complete-profile");
@@ -169,14 +165,22 @@ const CheckOtpForm = ({ onResendOTP, phoneNumber, setCurrentStep }) => {
       } else {
         navigate("/admin");
       }
+      toast.success("به سایت فریلنسو خوش آمدید.");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
     }
   };
-
+  if (!phoneNumber) {
+    return navigate("/");
+  }
   return (
     <form className="space-y-4" onSubmit={submitHandle}>
+      <div className="bg-blue-50 border border-blue-200 text-blue-700 text-sm rounded-xl p-3 mb-4">
+        🧪 نسخه آزمایشی: سیستم ارسال کد فعال نیست. کد تأیید در همین صفحه نمایش
+        داده می‌شود.
+      </div>
+
       <div className="flex flex-col gap-4">
         <p className="text-secondary-500 text-xs">
           کد تایید برای شماره موبایل {phoneNumber} ارسال شد

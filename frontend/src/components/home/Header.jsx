@@ -1,17 +1,18 @@
 import { Link } from "react-router";
-import useUser from "../../hooks/useUser";
 import { PiSignOut, PiUserDuotone } from "react-icons/pi";
 import { useState } from "react";
 import ConfirmSignOut from "../../ui/ConfirmSignOut";
+import useUser from "../../hooks/useUser";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { userData, isLoadingUser } = useUser();
   const user = userData?.user || null;
+  console.log(user);
   return (
     <header className="px-4 2xl:px-0 sticky top-4">
       <div className="container bg-secondary-300/40 backdrop-blur-3xl rounded-full p-4 px-6 md:px-10 flex items-center justify-between">
-        <h1 className="text-blue-950 font-semibold text-shadow-sm">فریلاین</h1>
+        <h1 className="text-blue-950 font-semibold text-shadow-sm">فریلنسو</h1>
         {!isLoadingUser && (
           <div>
             {user ? (

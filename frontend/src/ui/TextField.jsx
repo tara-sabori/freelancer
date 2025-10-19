@@ -6,6 +6,7 @@ const TextField = ({
   type = "text",
   required,
   errors,
+  inputMode = "",
 }) => {
   return (
     <div>
@@ -18,6 +19,7 @@ const TextField = ({
         className="border border-secondary-400 p-1.5 w-full text-sm rounded-md outline-none focus:shadow-sm bg-secondary-50"
         type={type}
         autoComplete="off"
+        inputMode={inputMode}
       />
       {errors && errors[name] && (
         <span className="text-error block text-sm mt-2">

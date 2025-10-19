@@ -2,7 +2,7 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -0.4 1440 320">
         <path
           fill="#162556"
           fillOpacity="1"
@@ -15,10 +15,10 @@ const Footer = () => {
             درباره ما
           </h4>
           <p className="max-w-[300px] text-center md:text-right text-secondary-200 text-sm leading-6">
-            فریلاین یه محیط خوب برای کارفرماها و فریلنسرهاست تا راحت و امن با هم
+            فریلنسو یه محیط خوب برای کارفرماها و فریلنسرهاست تا راحت و امن با هم
             کار کنن. اگه دنبال انجام پروژه‌هات هستی یا می‌خوای با مهارت‌هات
             درآمد داشته باشی، اینجا جاشه. همه‌چی ساده و شفاف پیش میره و تیم
-            فریلاین همیشه همراهته.
+            فریلنسو همیشه همراهته.
           </p>
         </div>
         <div className="flex flex-col items-center md:items-start gap-4">

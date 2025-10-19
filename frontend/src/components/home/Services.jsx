@@ -32,7 +32,7 @@ const Services = () => {
   return (
     <div className="container space-y-4 p-6 py-20">
       <h3 className="font-semibold text-blue-950 text-shadow-sm text-base lg:text-lg">
-        توی فریلاین چه خدماتی داریم؟
+        توی فریلنسو چه خدماتی داریم؟
       </h3>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {serviceItems?.map((item, index) => (

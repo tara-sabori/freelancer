@@ -11,7 +11,8 @@ export default function useSignOut() {
     mutationFn: signOutApi,
     onSuccess: () => {
       queryClient.removeQueries();
-      navigate("/", { replace: true });
+      navigate("/auth", { replace: true });
+      // window.location.reload();
     },
     onError: (err) =>
       toast.error(err?.response?.data?.message || "مشکلی رخ داده است."),
